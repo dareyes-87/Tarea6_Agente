@@ -1,17 +1,3 @@
-"""
-Agente de Búsqueda en Laberinto
-================================
-Implementa tres algoritmos de búsqueda:
-  - BFS  (Búsqueda en Anchura)
-  - DFS  (Búsqueda en Profundidad)
-  - A*   (A-estrella, búsqueda heurística)
-
-El laberinto se representa como una cuadrícula 2D:
-  0 = celda libre
-  1 = pared
-  S = inicio
-  E = salida (end)
-"""
 
 import heapq
 import time
@@ -23,11 +9,7 @@ from collections import deque
 # ─────────────────────────────────────────────
 
 LABERINTOS = {
-    # 7×7 — Dos rutas reales separadas por paredes.
-    # Ruta corta (13 pasos): atraviesa el centro del laberinto.
-    # Ruta larga (21 pasos): rodea por el borde exterior.
-    # DFS toma la larga porque su pila explora primero hacia la derecha.
-    # BFS y A* garantizan encontrar la corta.
+   
     "simple": [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 0],
@@ -38,10 +20,6 @@ LABERINTOS = {
         [0, 0, 0, 0, 0, 0, 0],
     ],
 
-    # 10×10 — Laberinto con múltiples corredores y bifurcaciones.
-    # Ruta corta (19 pasos): corredor central.
-    # Ruta larga (33 pasos): DFS la toma al expandir primero hacia la derecha.
-    # A* necesita solo 21 nodos explorados vs 31 de BFS — heurística en acción.
     "mediano": [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
@@ -55,11 +33,6 @@ LABERINTOS = {
         [1, 1, 0, 1, 1, 1, 1, 1, 0, 0],
     ],
 
-    # 12×12 — Laberinto complejo con paredes, cul-de-sacs y dos rutas.
-    # BFS explora 74 nodos (entra en los cul-de-sacs del norte).
-    # A* solo explora 27 nodos — la heurística lo dirige directo al sur-este.
-    # DFS toma 51 pasos (más del doble que el óptimo de 23).
-    # Esta es la demostración más clara de la ventaja de A*.
     "difícil": [
         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
         [1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0],
